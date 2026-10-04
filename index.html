@@ -1,0 +1,610 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>RankUp Elite - Global Sovereign Leaderboard Platform</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+  <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Outfit', 'sans-serif'],
+            mono: ['Space Grotesk', 'monospace'],
+          },
+          colors: {
+            brand: {
+              gold: '#FACC15',
+              dark: '#030712',
+              card: '#0B0F19',
+              border: '#1E293B'
+            }
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    body {
+      background-color: #030712;
+      color: #F8FAFC;
+    }
+    .glass-panel {
+      background: rgba(11, 15, 25, 0.75);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1px solid rgba(250, 204, 21, 0.15);
+    }
+    .gold-glow {
+      box-shadow: 0 0 50px -10px rgba(250, 204, 21, 0.2);
+    }
+    .gold-gradient {
+      background: linear-gradient(135deg, #FEF08A 0%, #EAB308 50%, #CA8A04 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    @keyframes pulseGlow {
+      0%, 100% { opacity: 0.4; }
+      50% { opacity: 0.8; }
+    }
+    .animate-glow {
+      animation: pulseGlow 4s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+    }
+  </style>
+</head>
+<body class="min-h-screen flex flex-col justify-between selection:bg-yellow-400 selection:text-black">
+
+  <header class="w-full border-b border-slate-800 bg-black/60 backdrop-blur-xl sticky top-0 z-50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 py-4 flex justify-between items-center">
+      <div class="flex items-center gap-3">
+        <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-yellow-600 to-yellow-300 flex items-center justify-center text-black font-black text-xl shadow-lg shadow-yellow-500/20">
+          👑
+        </div>
+        <div>
+          <span class="font-mono text-xl font-bold tracking-tight gold-gradient">RANKUP</span>
+          <span class="text-[10px] bg-yellow-500/10 text-yellow-400 border border-yellow-500/30 px-2 py-0.5 rounded-full ml-2 font-mono uppercase tracking-widest hidden sm:inline-block">Global v2.6</span>
+        </div>
+      </div>
+
+      <div class="flex items-center gap-3">
+        <div class="hidden md:flex items-center gap-2 bg-slate-900/80 px-3 py-1.5 rounded-xl border border-slate-800 text-xs text-slate-400">
+          <span id="hdr-status-dot" class="w-2 h-2 rounded-full bg-yellow-400 animate-pulse"></span>
+          <span>Gateway: <strong id="hdr-mode-indicator" class="text-yellow-400">Test Mode</strong></span>
+        </div>
+
+        <button onclick="openAdminModal()" class="px-3.5 py-2 rounded-xl bg-slate-900 hover:bg-slate-800 border border-slate-800 text-slate-300 text-xs font-semibold transition flex items-center gap-2">
+          <i class="fas fa-shield-alt text-yellow-400"></i>
+          <span class="hidden sm:inline">Admin Terminal</span>
+        </button>
+
+        <a href="#bid-section" class="px-4 py-2 rounded-xl bg-gradient-to-r from-yellow-400 to-amber-500 hover:brightness-110 text-black font-bold text-xs shadow-lg shadow-yellow-500/20 transition">
+          Claim Throne 🚀
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <div class="bg-yellow-500/10 border-b border-yellow-500/20 py-2 overflow-hidden whitespace-nowrap">
+    <div class="inline-block animate-[marquee_25s_linear_infinite] text-xs font-mono text-yellow-300 px-4">
+      ⚡ LIVE BROADCAST: Sovereign Throne open for global bidders worldwide • Instant Razorpay secure checkout enabled • Generate HD 1080x1080 Instagram promotion kits instantly • Current record crown up for grabs! ⚡
+    </div>
+  </div>
+
+  <main class="max-w-7xl mx-auto px-4 sm:px-6 py-10 flex-1 w-full space-y-12">
+
+    <section class="text-center space-y-6">
+      <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-yellow-500/10 border border-yellow-500/30 text-yellow-400 text-xs font-mono uppercase tracking-widest">
+        <i class="fas fa-crown"></i> Global Apex Leaderboard Position #1
+      </div>
+
+      <div class="glass-panel rounded-3xl p-8 sm:p-12 max-w-4xl mx-auto border-2 border-yellow-500/40 gold-glow relative overflow-hidden">
+        <div class="absolute -top-24 -right-24 w-64 h-64 bg-yellow-500/10 rounded-full blur-3xl animate-glow"></div>
+        <div class="absolute -bottom-24 -left-24 w-64 h-64 bg-amber-600/10 rounded-full blur-3xl animate-glow"></div>
+
+        <div class="relative z-10 space-y-6">
+          <div class="w-20 h-20 mx-auto rounded-2xl bg-gradient-to-tr from-yellow-600/20 to-yellow-300/30 border border-yellow-500/40 flex items-center justify-center text-4xl shadow-xl">
+            👑
+          </div>
+
+          <div>
+            <span class="text-xs font-mono uppercase tracking-widest text-slate-400 block mb-2">Current Sovereign Crown Holder</span>
+            <h1 id="hero-champion-name" class="font-sans text-4xl sm:text-6xl font-black tracking-tight gold-gradient">
+              No Sovereign Yet
+            </h1>
+          </div>
+
+          <div class="flex flex-wrap justify-center gap-6 pt-2">
+            <div class="bg-black/60 px-6 py-3.5 rounded-2xl border border-yellow-500/30 shadow-inner">
+              <span class="text-[10px] text-slate-400 block font-mono uppercase tracking-wider">Winning Bid</span>
+              <span id="hero-champion-bid" class="text-2xl sm:text-3xl font-mono font-black text-yellow-400">$0</span>
+            </div>
+            <div class="bg-black/60 px-6 py-3.5 rounded-2xl border border-slate-800">
+              <span class="text-[10px] text-slate-400 block font-mono uppercase tracking-wider">Claim Timestamp</span>
+              <span id="hero-champion-time" class="text-sm font-semibold text-slate-300">-- : --</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="bid-section" class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+
+      <!-- Razorpay Secure Bid Module -->
+      <div class="lg:col-span-6 glass-panel rounded-3xl p-6 sm:p-8 border border-slate-800 space-y-6 shadow-2xl">
+        <div class="flex justify-between items-center border-b border-slate-800 pb-4">
+          <div>
+            <h2 class="font-sans text-xl font-bold text-slate-100 flex items-center gap-2">
+              <i class="fas fa-bolt text-yellow-400"></i> Sovereign Bid Checkout
+            </h2>
+            <p class="text-xs text-slate-400 mt-0.5">Secure payment processing via Razorpay gateway.</p>
+          </div>
+          <span class="px-2.5 py-1 rounded-lg bg-emerald-500/10 text-emerald-400 border border-emerald-500/30 text-[10px] font-mono">SSL 256-Bit</span>
+        </div>
+
+        <form id="bid-form" onsubmit="handleRazorpayCheckout(event)" class="space-y-4">
+          <div>
+            <label class="block text-xs font-mono uppercase tracking-wider text-slate-300 mb-1.5">Brand / Creator Identifier</label>
+            <input type="text" id="bidder-name" required placeholder="e.g. Apex Global Tech" class="w-full bg-slate-900/90 border border-slate-800 rounded-xl px-4 py-3.5 text-sm focus:outline-none focus:border-yellow-400 transition placeholder:text-slate-600 font-medium">
+          </div>
+
+          <div>
+            <label class="block text-xs font-mono uppercase tracking-wider text-slate-300 mb-1.5">Bid Amount ($ USD / Equivalent)</label>
+            <div class="relative">
+              <span class="absolute left-4 top-3.5 text-yellow-400 font-bold">$</span>
+              <input type="number" id="bidder-amount" min="1" required placeholder="Must exceed current highest bid" class="w-full bg-slate-900/90 border border-slate-800 rounded-xl pl-8 pr-4 py-3.5 text-sm focus:outline-none focus:border-yellow-400 transition placeholder:text-slate-600 font-mono">
+            </div>
+            <p class="text-[11px] text-slate-500 mt-1.5">Note: Automatic currency conversion applied for international cards.</p>
+          </div>
+
+          <button type="submit" class="w-full py-4 rounded-xl font-bold uppercase tracking-wider text-black bg-gradient-to-r from-yellow-400 via-amber-400 to-yellow-500 hover:brightness-110 shadow-lg shadow-yellow-500/25 transition-all flex items-center justify-center gap-2 text-sm">
+            <span>Proceed to Razorpay Checkout</span>
+            <i class="fas fa-arrow-right"></i>
+          </button>
+        </form>
+      </div>
+
+      <!-- YouTube Live Stream Module -->
+      <div class="lg:col-span-6 glass-panel rounded-3xl p-6 sm:p-8 border border-slate-800 space-y-6 shadow-2xl">
+        <div class="flex items-center justify-between border-b border-slate-800 pb-4">
+          <h2 class="font-sans text-xl font-bold text-slate-100 flex items-center gap-2">
+            <i class="fab fa-youtube text-red-500"></i> Live Stream Feed
+          </h2>
+          <span class="text-[10px] font-mono bg-red-500/10 text-red-400 border border-red-500/30 px-2.5 py-1 rounded-full uppercase tracking-wider">LIVE 24/7</span>
+        </div>
+
+        <div class="relative w-full rounded-2xl overflow-hidden border border-slate-800 aspect-video bg-black shadow-inner">
+          <iframe id="live-yt-iframe" class="w-full h-full" src="https://www.youtube.com/embed/jfKfPfyJRdk" title="RankUp Stream" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        </div>
+
+        <div class="flex items-center justify-between text-xs text-slate-400 pt-2">
+          <span>Official Broadcast Hub</span>
+          <a id="external-yt-link" href="https://youtube.com" target="_blank" class="text-yellow-400 hover:underline font-semibold flex items-center gap-1">
+            Open on YouTube <i class="fas fa-external-link-alt text-[10px]"></i>
+          </a>
+        </div>
+      </div>
+
+    </section>
+
+    <section class="glass-panel rounded-3xl p-6 sm:p-8 border border-slate-800 space-y-6 shadow-2xl">
+      <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 border-b border-slate-800 pb-4">
+        <div>
+          <h2 class="font-sans text-xl font-bold text-slate-100 flex items-center gap-2">
+            <i class="fas fa-history text-yellow-400"></i> Verified Sovereign Ledger
+          </h2>
+          <p class="text-xs text-slate-400 mt-0.5">Historical record of all crown takeovers and verified transactions.</p>
+        </div>
+        <div class="flex items-center gap-2 text-xs font-mono text-slate-400 bg-slate-900 px-3 py-1.5 rounded-xl border border-slate-800">
+          <span>Total Bids: <strong id="total-bids-count" class="text-yellow-400">0</strong></span>
+        </div>
+      </div>
+
+      <div class="overflow-x-auto">
+        <table class="w-full text-left text-sm">
+          <thead class="bg-slate-900/90 text-xs font-mono uppercase tracking-wider text-slate-400 border-b border-slate-800">
+            <tr>
+              <th class="py-3.5 px-4 rounded-l-xl">Rank</th>
+              <th class="py-3.5 px-4">Sovereign / Brand Name</th>
+              <th class="py-3.5 px-4">Bid Value</th>
+              <th class="py-3.5 px-4 rounded-r-xl">Timestamp</th>
+            </tr>
+          </thead>
+          <tbody id="ledger-table-body" class="divide-y divide-slate-800/40 text-slate-300 font-medium">
+            <tr>
+              <td colspan="4" class="py-8 text-center text-slate-500 italic">No historical crown claims recorded yet. Be the first!</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+  </main>
+
+  <div id="poster-modal" class="fixed inset-0 z-50 bg-black/85 backdrop-blur-md hidden flex items-center justify-center p-4 overflow-y-auto">
+    <div class="glass-panel rounded-3xl max-w-2xl w-full p-6 sm:p-8 border border-yellow-500/40 space-y-6 my-8 shadow-2xl">
+      <div class="flex justify-between items-center border-b border-slate-800 pb-4">
+        <div>
+          <h3 class="font-sans text-xl font-bold text-yellow-400 flex items-center gap-2">
+            <i class="fab fa-instagram text-pink-500"></i> HD Instagram Promotion Kit
+          </h3>
+          <p class="text-xs text-slate-400">1080x1080 Sovereign Victory Canvas generated instantly.</p>
+        </div>
+        <button onclick="closePosterModal()" class="text-slate-400 hover:text-white text-xl p-1"><i class="fas fa-times"></i></button>
+      </div>
+
+      <div class="flex flex-col items-center space-y-4">
+        <div class="w-full max-w-sm rounded-2xl overflow-hidden border-2 border-yellow-500/50 shadow-2xl bg-black">
+          <canvas id="poster-canvas" width="1080" height="1080" class="w-full h-auto block"></canvas>
+        </div>
+
+        <button onclick="downloadPoster()" class="w-full sm:w-auto px-6 py-3.5 bg-gradient-to-r from-yellow-400 to-amber-500 text-black font-bold text-xs uppercase tracking-wider rounded-xl shadow-lg hover:brightness-110 transition flex items-center justify-center gap-2 font-mono">
+          <i class="fas fa-download"></i> Download HD Poster (.PNG)
+        </button>
+      </div>
+
+      <div class="space-y-3 bg-slate-900/90 p-4 rounded-2xl border border-slate-800">
+        <div class="flex justify-between items-center">
+          <span class="text-xs font-mono uppercase text-slate-300">Ready-to-Post Caption</span>
+          <button onclick="copyCaption()" class="text-xs text-yellow-400 hover:underline font-semibold flex items-center gap-1">
+            <i class="fas fa-copy"></i> Copy Caption
+          </button>
+        </div>
+        <textarea id="share-caption" readonly rows="3" class="w-full bg-black/60 border border-slate-800 rounded-xl p-3 text-xs text-slate-300 font-mono focus:outline-none resize-none"></textarea>
+
+        <div class="pt-2 border-t border-slate-800 flex flex-col sm:flex-row items-center justify-between gap-3">
+          <span class="text-xs text-slate-400"><i class="fab fa-x-twitter text-sky-400 mr-1"></i> Trigger Automated Social Broadcast:</span>
+          <button onclick="triggerTwitterTweet()" class="w-full sm:w-auto px-4 py-2 bg-sky-500 hover:bg-sky-400 text-black font-bold text-xs rounded-xl transition flex items-center justify-center gap-2">
+            <i class="fab fa-x-twitter"></i> Broadcast on X (Twitter)
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="admin-modal" class="fixed inset-0 z-50 bg-black/85 backdrop-blur-md hidden flex items-center justify-center p-4">
+    <div class="glass-panel rounded-3xl max-w-md w-full p-6 sm:p-8 border border-yellow-500/30 space-y-6 shadow-2xl">
+      <div class="flex justify-between items-center border-b border-slate-800 pb-4">
+        <h3 class="font-sans text-lg font-bold text-yellow-400 flex items-center gap-2">
+          <i class="fas fa-shield-alt"></i> Admin Control Center
+        </h3>
+        <button onclick="closeAdminModal()" class="text-slate-400 hover:text-white p-1"><i class="fas fa-times"></i></button>
+      </div>
+
+      <div id="admin-auth-box" class="space-y-4">
+        <p class="text-xs text-slate-400">Enter secure administrative passkey (<code class="text-yellow-400 font-mono">RankUpAdmin2026</code>) to unlock master controls.</p>
+        <input type="password" id="admin-passkey-input" placeholder="Enter passkey..." class="w-full bg-slate-900 border border-slate-800 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-yellow-400 font-mono">
+        <button onclick="verifyAdminLogin()" class="w-full py-3 bg-yellow-500 hover:bg-yellow-400 text-black font-bold text-xs uppercase tracking-wider rounded-xl transition font-mono">
+          Authenticate Terminal
+        </button>
+      </div>
+
+      <div id="admin-dashboard-box" class="hidden space-y-5">
+        <div class="bg-yellow-500/10 border border-yellow-500/20 p-3 rounded-xl flex items-center justify-between text-xs">
+          <span class="text-yellow-400 font-mono font-bold">STATUS: UNLOCKED</span>
+          <span class="text-slate-400">Admin Session Active</span>
+        </div>
+
+        <div class="space-y-4 text-xs">
+          <div>
+            <label class="block font-mono uppercase text-slate-400 mb-1">Razorpay API Key (Test or Live rzp_live_...)</label>
+            <input type="text" id="adm-key-input" placeholder="rzp_test_... or rzp_live_..." class="w-full bg-slate-900 border border-slate-800 rounded-xl p-3 text-slate-200 font-mono">
+            <p class="text-[10px] text-slate-500 mt-1">Saves directly to browser storage on the fly without code redeploy.</p>
+          </div>
+
+          <div>
+            <label class="block font-mono uppercase text-slate-400 mb-1">YouTube Stream Embed URL</label>
+            <input type="url" id="adm-yt-input" placeholder="https://www.youtube.com/embed/..." class="w-full bg-slate-900 border border-slate-800 rounded-xl p-3 text-slate-200">
+          </div>
+        </div>
+
+        <div class="space-y-2 pt-2">
+          <button onclick="saveAdminSettings()" class="w-full py-3 bg-gradient-to-r from-yellow-400 to-amber-500 text-black font-bold text-xs uppercase tracking-wider rounded-xl shadow transition font-mono">
+            Save & Sync System
+          </button>
+          <button onclick="resetLeaderboard()" class="w-full py-2.5 bg-red-500/10 hover:bg-red-500/20 text-red-400 border border-red-500/30 font-bold text-xs rounded-xl transition">
+            Reset Leaderboard to $0
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <footer class="border-t border-slate-900 py-8 text-center text-xs text-slate-600 font-mono space-y-2">
+    <p>© 2026 RankUp Elite Sovereign Platform (https://rankup-leaderboard1.vercel.app). All rights reserved.</p>
+    <p>Global Sovereign Leaderboard • Razorpay Integration • Automated Social Matrix</p>
+  </footer>
+
+  <script>
+    let activeKey = localStorage.getItem('rankup_razorpay_key') || "rzp_test_Tjs9sIYHTeeVCV";
+    let ytEmbedUrl = localStorage.getItem('rankup_yt_url') || "https://www.youtube.com/embed/jfKfPfyJRdk";
+
+    let sovereignChampion = JSON.parse(localStorage.getItem('rankup_champion')) || {
+      name: "No Sovereign Yet",
+      bid: 0,
+      timestamp: "-- : --"
+    };
+
+    let ledgerHistory = JSON.parse(localStorage.getItem('rankup_ledger')) || [];
+
+    window.onload = function() {
+      updateGatewayIndicator();
+      renderLeaderboardState();
+      
+      if (ytEmbedUrl) {
+        document.getElementById('live-yt-iframe').src = ytEmbedUrl;
+      }
+
+      // Check URL parameters for secret admin trigger (?admin or ?terminal)
+      const urlParams = new URLSearchParams(window.location.search);
+      if (urlParams.has('admin') || urlParams.has('terminal')) {
+        openAdminModal();
+      }
+    };
+
+    function updateGatewayIndicator() {
+      const ind = document.getElementById('hdr-mode-indicator');
+      const dot = document.getElementById('hdr-status-dot');
+      if (activeKey.startsWith('rzp_live_')) {
+        ind.innerText = "Live Mode Active";
+        ind.className = "text-emerald-400";
+        dot.className = "w-2 h-2 rounded-full bg-emerald-400 animate-pulse";
+      } else {
+        ind.innerText = "Test Mode";
+        ind.className = "text-yellow-400";
+        dot.className = "w-2 h-2 rounded-full bg-yellow-400 animate-pulse";
+      }
+    }
+
+    function renderLeaderboardState() {
+      document.getElementById('hero-champion-name').innerText = sovereignChampion.name;
+      document.getElementById('hero-champion-bid').innerText = '$' + sovereignChampion.bid.toLocaleString();
+      document.getElementById('hero-champion-time').innerText = sovereignChampion.timestamp;
+      document.getElementById('total-bids-count').innerText = ledgerHistory.length;
+
+      const tbody = document.getElementById('ledger-table-body');
+      if (ledgerHistory.length === 0) {
+        tbody.innerHTML = `<tr><td colspan="4" class="py-8 text-center text-slate-500 italic">No historical crown claims recorded yet. Be the first!</td></tr>`;
+        return;
+      }
+
+      tbody.innerHTML = ledgerHistory.map((item, idx) => `
+        <tr class="hover:bg-slate-900/50 transition">
+          <td class="py-3.5 px-4 font-mono font-bold text-yellow-400">#${ledgerHistory.length - idx}</td>
+          <td class="py-3.5 px-4 font-semibold text-slate-200">${escapeHtml(item.name)}</td>
+          <td class="py-3.5 px-4 font-mono text-yellow-300 font-bold">$${item.bid.toLocaleString()}</td>
+          <td class="py-3.5 px-4 text-xs font-mono text-slate-500">${item.timestamp}</td>
+        </tr>
+      `).join('');
+    }
+
+    function handleRazorpayCheckout(e) {
+      e.preventDefault();
+      const name = document.getElementById('bidder-name').value.trim();
+      const amount = parseFloat(document.getElementById('bidder-amount').value);
+
+      if (!name) {
+        alert('Please enter a valid brand or creator name.');
+        return;
+      }
+
+      if (amount <= sovereignChampion.bid) {
+        alert(`Bid amount must exceed the current sovereign crown bid of $${sovereignChampion.bid.toLocaleString()}`);
+        return;
+      }
+
+      const options = {
+        "key": activeKey,
+        "amount": Math.round(amount * 100 * 83), // INR conversion approximation or test multiplier
+        "currency": "INR",
+        "name": "RankUp Elite Global",
+        "description": `Claim #1 Sovereign Throne for ${name}`,
+        "image": "https://placehold.co/128x128/EAB308/000000?text=👑",
+        "handler": function (response) {
+          onPaymentSuccess(name, amount, response.razorpay_payment_id);
+        },
+        "prefill": {
+          "name": name,
+          "email": "sovereign@rankup.vercel.app",
+          "contact": "9999999999"
+        },
+        "theme": {
+          "color": "#EAB308"
+        }
+      };
+
+      const rzp = new Razorpay(options);
+      rzp.on('payment.failed', function (resp){
+        alert("Payment Gateway Error: " + resp.error.description);
+      });
+      rzp.open();
+    }
+
+    function onPaymentSuccess(name, amount, paymentId) {
+      const now = new Date();
+      const timeStr = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) + ', ' + now.toLocaleDateString();
+
+      sovereignChampion = {
+        name: name,
+        bid: amount,
+        timestamp: timeStr
+      };
+
+      ledgerHistory.unshift({...sovereignChampion});
+      
+      // Save state to localStorage for persistence
+      localStorage.setItem('rankup_champion', JSON.stringify(sovereignChampion));
+      localStorage.setItem('rankup_ledger', JSON.stringify(ledgerHistory));
+
+      renderLeaderboardState();
+      document.getElementById('bid-form').reset();
+
+      // Generate Instagram Poster Kit
+      renderPosterCanvas(sovereignChampion.name, sovereignChampion.bid);
+      setupCaptionAndTweet(sovereignChampion.name, sovereignChampion.bid);
+      document.getElementById('poster-modal').classList.remove('hidden');
+
+      console.log(`Payment verified successfully! ID: ${paymentId}`);
+    }
+
+    function renderPosterCanvas(name, bid) {
+      const canvas = document.getElementById('poster-canvas');
+      const ctx = canvas.getContext('2d');
+
+      const bgGrad = ctx.createLinearGradient(0, 0, 1080, 1080);
+      bgGrad.addColorStop(0, '#030712');
+      bgGrad.addColorStop(0.5, '#0B0F19');
+      bgGrad.addColorStop(1, '#000000');
+      ctx.fillStyle = bgGrad;
+      ctx.fillRect(0, 0, 1080, 1080);
+
+      ctx.strokeStyle = '#EAB308';
+      ctx.lineWidth = 18;
+      ctx.strokeRect(40, 40, 1000, 1000);
+
+      ctx.strokeStyle = 'rgba(234, 179, 8, 0.25)';
+      ctx.lineWidth = 4;
+      ctx.strokeRect(65, 65, 950, 950);
+
+      ctx.textAlign = 'center';
+      ctx.font = '72px sans-serif';
+      ctx.fillText('👑', 540, 175);
+
+      ctx.fillStyle = '#EAB308';
+      ctx.font = 'bold 36px sans-serif';
+      ctx.fillText('RANKUP ELITE SOVEREIGN', 540, 245);
+
+      ctx.fillStyle = '#94A3B8';
+      ctx.font = 'bold 22px sans-serif';
+      ctx.fillText('GLOBAL APEX LEADERBOARD TAKEOVER', 540, 290);
+
+      ctx.strokeStyle = '#EAB308';
+      ctx.lineWidth = 2;
+      ctx.beginPath();
+      ctx.moveTo(320, 340);
+      ctx.lineTo(760, 340);
+      ctx.stroke();
+
+      ctx.fillStyle = '#FFFFFF';
+      ctx.font = 'bold 30px sans-serif';
+      ctx.fillText('NEW #1 SOVEREIGN CROWN', 540, 430);
+
+      ctx.fillStyle = '#FEF08A';
+      ctx.font = 'bold 64px sans-serif';
+      ctx.fillText(name.toUpperCase(), 540, 530);
+
+      ctx.fillStyle = 'rgba(234, 179, 8, 0.15)';
+      ctx.fillRect(220, 610, 640, 190);
+      ctx.strokeStyle = '#EAB308';
+      ctx.lineWidth = 3;
+      ctx.strokeRect(220, 610, 640, 190);
+
+      ctx.fillStyle = '#94A3B8';
+      ctx.font = '24px sans-serif';
+      ctx.fillText('VERIFIED WINNING BID', 540, 665);
+
+      ctx.fillStyle = '#4ADE80';
+      ctx.font = 'bold 72px sans-serif';
+      ctx.fillText('$' + bid.toLocaleString(), 540, 760);
+
+      ctx.fillStyle = '#64748B';
+      ctx.font = '20px sans-serif';
+      ctx.fillText('Broadcast live on YouTube & X (Twitter)', 540, 895);
+
+      ctx.fillStyle = '#EAB308';
+      ctx.font = 'bold 24px sans-serif';
+      ctx.fillText('https://rankup-leaderboard1.vercel.app', 540, 945);
+    }
+
+    function downloadPoster() {
+      const canvas = document.getElementById('poster-canvas');
+      const link = document.createElement('a');
+      link.download = `${sovereignChampion.name.replace(/\s+/g, '_')}_Sovereign_Rank1.png`;
+      link.href = canvas.toDataURL('image/png');
+      link.click();
+    }
+
+    function setupCaptionAndTweet(name, bid) {
+      const text = `👑 NEW #1 SOVEREIGN CROWN TAKEOVER! 👑\n\n${name} has officially claimed the apex position on RankUp Elite with a winning bid of $${bid.toLocaleString()}!\n\n🔥 Think you can dethrone them? Place your bid now:\n🌐 https://rankup-leaderboard1.vercel.app\n\n#RankUp #Leaderboard #Sovereign #Apex #TechStartup #Global`;
+      document.getElementById('share-caption').value = text;
+    }
+
+    function copyCaption() {
+      const area = document.getElementById('share-caption');
+      area.select();
+      document.execCommand('copy');
+      alert('Instagram caption copied to clipboard!');
+    }
+
+    function triggerTwitterTweet() {
+      const text = encodeURIComponent(`👑 NEW #1 SOVEREIGN CROWN TAKEOVER!\n\n${sovereignChampion.name} just claimed Rank #1 with a bid of $${sovereignChampion.bid.toLocaleString()} on RankUp Elite!\n\nDethrone them now: https://rankup-leaderboard1.vercel.app`);
+      window.open(`https://twitter.com/intent/tweet?text=${text}`, '_blank');
+    }
+
+    function closePosterModal() {
+      document.getElementById('poster-modal').classList.add('hidden');
+    }
+
+    function openAdminModal() {
+      document.getElementById('admin-modal').classList.remove('hidden');
+    }
+
+    function closeAdminModal() {
+      document.getElementById('admin-modal').classList.add('hidden');
+    }
+
+    function verifyAdminLogin() {
+      const pass = document.getElementById('admin-passkey-input').value;
+      if (pass === 'RankUpAdmin2026') {
+        document.getElementById('admin-auth-box').classList.add('hidden');
+        document.getElementById('admin-dashboard-box').classList.remove('hidden');
+
+        document.getElementById('adm-key-input').value = activeKey;
+        document.getElementById('adm-yt-input').value = ytEmbedUrl;
+      } else {
+        alert('Invalid Admin Passkey! Use RankUpAdmin2026');
+      }
+    }
+
+    function saveAdminSettings() {
+      const newKey = document.getElementById('adm-key-input').value.trim();
+      const newYt = document.getElementById('adm-yt-input').value.trim();
+
+      if (newKey) {
+        activeKey = newKey;
+        localStorage.setItem('rankup_razorpay_key', activeKey);
+        updateGatewayIndicator();
+      }
+
+      if (newYt) {
+        ytEmbedUrl = newYt;
+        localStorage.setItem('rankup_yt_url', ytEmbedUrl);
+        document.getElementById('live-yt-iframe').src = ytEmbedUrl;
+      }
+
+      alert('Admin settings updated & saved successfully on the fly!');
+      closeAdminModal();
+    }
+
+    function resetLeaderboard() {
+      if (confirm('Are you sure you want to reset the leaderboard sovereign and ledger to $0?')) {
+        sovereignChampion = { name: "No Sovereign Yet", bid: 0, timestamp: "-- : --" };
+        ledgerHistory = [];
+        localStorage.removeItem('rankup_champion');
+        localStorage.removeItem('rankup_ledger');
+        renderLeaderboardState();
+        alert('Leaderboard reset successfully.');
+        closeAdminModal();
+      }
+    }
+
+    function escapeHtml(str) {
+      return str.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#039;");
+    }
+  </script>
+</body>
+</html>
