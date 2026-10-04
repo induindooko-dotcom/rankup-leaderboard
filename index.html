@@ -1,0 +1,509 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>RankUp Official - #1 Global Sovereign Leaderboard</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700;900&family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+  <style>
+    body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      background-color: #05070a;
+      color: #e2e8f0;
+    }
+    .font-cinzel {
+      font-family: 'Cinzel', serif;
+    }
+    .gold-gradient-text {
+      background: linear-gradient(135deg, #FFF5C0 0%, #E6B800 50%, #997A00 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .glass-card {
+      background: rgba(15, 23, 42, 0.8);
+      backdrop-filter: blur(16px);
+      border: 1px solid rgba(234, 179, 8, 0.25);
+    }
+    .gold-glow {
+      box-shadow: 0 0 35px rgba(234, 179, 8, 0.25);
+    }
+  </style>
+</head>
+<body class="min-h-screen flex flex-col justify-between selection:bg-amber-500 selection:text-black">
+
+  <header class="w-full border-b border-amber-500/20 bg-black/70 backdrop-blur-md sticky top-0 z-40">
+    <div class="max-w-7xl mx-auto px-4 py-3 flex justify-between items-center">
+      <div class="flex items-center gap-3">
+        <div class="w-10 h-10 rounded-full bg-gradient-to-tr from-amber-600 to-yellow-300 flex items-center justify-center text-black font-black text-xl shadow-lg">
+          👑
+        </div>
+        <span class="font-cinzel text-xl font-bold tracking-wider gold-gradient-text">RANKUP OFFICIAL</span>
+      </div>
+
+      <div class="flex items-center gap-4">
+        <span class="text-xs text-slate-400 hidden sm:inline-block font-semibold uppercase tracking-wider">Connect:</span>
+        <a id="hdr-youtube" href="https://youtube.com" target="_blank" class="w-9 h-9 rounded-full bg-red-600/20 border border-red-500/40 text-red-400 flex items-center justify-center hover:bg-red-600 hover:text-white transition-all">
+          <i class="fab fa-youtube text-lg"></i>
+        </a>
+        <a id="hdr-instagram" href="https://instagram.com" target="_blank" class="w-9 h-9 rounded-full bg-pink-600/20 border border-pink-500/40 text-pink-400 flex items-center justify-center hover:bg-pink-600 hover:text-white transition-all">
+          <i class="fab fa-instagram text-lg"></i>
+        </a>
+        <a id="hdr-twitter" href="https://twitter.com" target="_blank" class="w-9 h-9 rounded-full bg-sky-500/20 border border-sky-400/40 text-sky-400 flex items-center justify-center hover:bg-sky-500 hover:text-white transition-all">
+          <i class="fab fa-x-twitter text-lg"></i>
+        </a>
+        <button onclick="openAdminModal()" class="ml-2 text-xs bg-slate-800 hover:bg-slate-700 text-slate-300 px-3 py-1.5 rounded-md border border-slate-700 transition">
+          <i class="fas fa-lock text-amber-400 mr-1"></i> Admin Panel
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main class="max-w-6xl mx-auto px-4 py-8 flex-1 w-full space-y-12">
+
+    <!-- HERO #1 CHAMPION THRONE -->
+    <section class="text-center space-y-6">
+      <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-amber-500/10 border border-amber-500/30 text-amber-300 text-xs font-semibold uppercase tracking-widest">
+        <i class="fas fa-gem text-amber-400"></i> Global Sovereign Throne
+      </div>
+
+      <div id="champion-card" class="glass-card rounded-3xl p-8 max-w-3xl mx-auto border-2 border-amber-500/40 gold-glow relative overflow-hidden transition-all duration-500">
+        <div class="absolute -top-12 -right-12 w-40 h-40 bg-amber-500/10 rounded-full blur-3xl"></div>
+        <div class="absolute -bottom-12 -left-12 w-40 h-40 bg-cyan-500/10 rounded-full blur-3xl"></div>
+
+        <div class="relative z-10 space-y-4">
+          <div class="text-6xl animate-bounce">👑</div>
+          <p class="text-xs font-bold uppercase tracking-widest text-slate-400">Current #1 Crown Holder</p>
+          <h1 id="champion-name" class="font-cinzel text-4xl sm:text-6xl font-black tracking-wide gold-gradient-text">
+            No Champion Yet
+          </h1>
+
+          <div class="pt-4 flex flex-col sm:flex-row items-center justify-center gap-6">
+            <div class="bg-black/50 px-6 py-3 rounded-2xl border border-amber-500/20">
+              <span class="text-xs text-slate-400 block uppercase font-bold">Highest Bid</span>
+              <span id="champion-bid" class="text-2xl font-black text-amber-400">$0</span>
+            </div>
+            <div class="bg-black/50 px-6 py-3 rounded-2xl border border-amber-500/20">
+              <span class="text-xs text-slate-400 block uppercase font-bold">Claimed Timestamp</span>
+              <span id="champion-time" class="text-sm font-semibold text-slate-300">-- : --</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+
+      <!-- BID FORM WITH RAZORPAY INTEGRATION -->
+      <div class="lg:col-span-6 glass-card rounded-2xl p-6 border border-slate-800 space-y-5">
+        <h2 class="font-cinzel text-xl font-bold text-amber-400 flex items-center gap-2">
+          <i class="fas fa-bolt text-yellow-400"></i> Secure Razorpay Bid Checkout
+        </h2>
+        <p class="text-xs text-slate-400">Enter your brand name and bid amount to trigger the secure Razorpay payment gateway (Test Mode Rzp_test_Tjs9sIYHTeeVCV).</p>
+
+        <form id="bid-form" onsubmit="initiateRazorpayPayment(event)" class="space-y-4">
+          <div>
+            <label class="block text-xs font-bold uppercase text-slate-300 mb-1">Brand / Creator Name</label>
+            <input type="text" id="bid-name" required placeholder="e.g. Apex Global" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-amber-400 transition">
+          </div>
+
+          <div>
+            <label class="block text-xs font-bold uppercase text-slate-300 mb-1">Bid Amount ($ USD / INR)</label>
+            <input type="number" id="bid-amount" min="1" required placeholder="Must exceed current highest bid" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-amber-400 transition">
+          </div>
+
+          <button type="submit" class="w-full py-4 rounded-xl font-bold uppercase tracking-wider text-black bg-gradient-to-r from-amber-400 via-yellow-300 to-amber-500 hover:brightness-110 shadow-lg shadow-amber-500/20 transition-all">
+            Proceed via Razorpay Checkout 🚀
+          </button>
+        </form>
+      </div>
+
+      <!-- OFFICIAL YOUTUBE STREAM EMBED -->
+      <div class="lg:col-span-6 glass-card rounded-2xl p-6 border border-slate-800 space-y-4">
+        <div class="flex items-center justify-between">
+          <h2 class="font-cinzel text-xl font-bold text-red-500 flex items-center gap-2">
+            <i class="fab fa-youtube"></i> Live Channel Stream
+          </h2>
+          <span class="text-xs bg-red-500/10 text-red-400 border border-red-500/20 px-2.5 py-1 rounded-full font-semibold">Broadcast Online</span>
+        </div>
+        <p class="text-xs text-slate-400">Watch live global crown takeovers and creator spotlights directly on YouTube.</p>
+        
+        <div class="relative w-full rounded-xl overflow-hidden border border-slate-800 aspect-video bg-slate-900">
+          <iframe id="yt-embed" class="w-full h-full" src="https://www.youtube.com/embed/jfKfPfyJRdk" title="RankUp Broadcast" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        </div>
+        
+        <a id="yt-channel-link" href="https://youtube.com" target="_blank" class="block w-full text-center py-2.5 bg-red-600/20 hover:bg-red-600/30 border border-red-500/40 text-red-300 text-xs font-bold rounded-xl transition">
+          Visit Official YouTube Channel <i class="fas fa-external-link-alt ml-1"></i>
+        </a>
+      </div>
+
+    </section>
+
+    <section class="glass-card rounded-2xl p-6 border border-slate-800 space-y-4">
+      <h2 class="font-cinzel text-lg font-bold text-slate-200 flex items-center gap-2">
+        <i class="fas fa-history text-amber-400"></i> Verified Crown Claim Log
+      </h2>
+      <div class="overflow-x-auto">
+        <table class="w-full text-left text-sm">
+          <thead class="bg-slate-900/80 text-xs font-bold uppercase text-slate-400 border-b border-slate-800">
+            <tr>
+              <th class="py-3 px-4">Rank</th>
+              <th class="py-3 px-4">Champion Name</th>
+              <th class="py-3 px-4">Bid Amount</th>
+              <th class="py-3 px-4">Timestamp</th>
+            </tr>
+          </thead>
+          <tbody id="history-table-body" class="divide-y divide-slate-800/50 text-slate-300">
+            <tr>
+              <td colspan="4" class="py-6 text-center text-slate-500 italic">No historical bids recorded yet.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+  </main>
+
+  <div id="poster-modal" class="fixed inset-0 z-50 bg-black/85 backdrop-blur-md hidden flex items-center justify-center p-4 overflow-y-auto">
+    <div class="glass-card rounded-3xl max-w-2xl w-full p-6 border border-amber-500/40 space-y-6 my-8">
+      <div class="flex justify-between items-center border-b border-slate-800 pb-4">
+        <div>
+          <h3 class="font-cinzel text-xl font-bold text-amber-400">🎉 Instagram Poster Kit Generated</h3>
+          <p class="text-xs text-slate-400">High-resolution 1080x1080 gold canvas ready for social media!</p>
+        </div>
+        <button onclick="closePosterModal()" class="text-slate-400 hover:text-white text-xl"><i class="fas fa-times"></i></button>
+      </div>
+
+      <div class="flex flex-col items-center space-y-4">
+        <div class="w-full max-w-sm rounded-2xl overflow-hidden border-2 border-amber-500/50 shadow-2xl">
+          <canvas id="poster-canvas" width="1080" height="1080" class="w-full h-auto block bg-black"></canvas>
+        </div>
+
+        <button onclick="downloadPosterImage()" class="w-full sm:w-auto px-6 py-3 bg-gradient-to-r from-amber-500 to-yellow-400 text-black font-bold rounded-xl shadow-lg hover:brightness-110 transition flex items-center justify-center gap-2">
+          <i class="fas fa-download"></i> Download HD Instagram Poster (.PNG)
+        </button>
+      </div>
+
+      <div class="space-y-4 bg-slate-900/90 p-4 rounded-xl border border-slate-800">
+        <div>
+          <div class="flex justify-between items-center mb-1">
+            <span class="text-xs font-bold uppercase text-slate-300"><i class="fab fa-instagram text-pink-500"></i> Instagram Caption</span>
+            <button onclick="copyInstagramCaption()" class="text-xs text-amber-400 hover:underline flex items-center gap-1">
+              <i class="fas fa-copy"></i> Copy Caption
+            </button>
+          </div>
+          <textarea id="insta-caption" readonly rows="3" class="w-full bg-slate-950 border border-slate-800 rounded-lg p-2.5 text-xs text-slate-300 font-mono focus:outline-none"></textarea>
+        </div>
+
+        <div class="pt-2 border-t border-slate-800 flex flex-col sm:flex-row gap-3 items-center justify-between">
+          <span class="text-xs text-slate-400"><i class="fab fa-x-twitter text-sky-400"></i> Automated Twitter Broadcast:</span>
+          <button onclick="triggerTweetBroadcast()" class="w-full sm:w-auto px-4 py-2 bg-sky-500 hover:bg-sky-400 text-black font-bold text-xs rounded-lg transition flex items-center justify-center gap-2">
+            <i class="fab fa-x-twitter"></i> Post to Twitter (X)
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="admin-modal" class="fixed inset-0 z-50 bg-black/85 backdrop-blur-md hidden flex items-center justify-center p-4">
+    <div class="glass-card rounded-3xl max-w-md w-full p-6 border border-slate-700 space-y-5">
+      <div class="flex justify-between items-center border-b border-slate-800 pb-3">
+        <h3 class="font-cinzel text-lg font-bold text-amber-400"><i class="fas fa-user-shield"></i> Admin Control Center</h3>
+        <button onclick="closeAdminModal()" class="text-slate-400 hover:text-white"><i class="fas fa-times"></i></button>
+      </div>
+
+      <div id="admin-auth" class="space-y-3">
+        <p class="text-xs text-slate-400">Enter secure admin passkey to manage YouTube streams and leaderboard overrides.</p>
+        <input type="password" id="admin-passkey" placeholder="Passkey (RankUpAdmin2026)" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-2.5 text-sm focus:outline-none">
+        <button onclick="authenticateAdmin()" class="w-full py-2.5 bg-amber-500 text-black font-bold text-sm rounded-xl">Unlock Controls</button>
+      </div>
+
+      <div id="admin-controls" class="hidden space-y-4">
+        <h4 class="text-xs font-bold uppercase text-slate-400">Configure Platform Links</h4>
+        <div class="space-y-2 text-xs">
+          <input type="url" id="adm-yt" placeholder="YouTube Channel Link" class="w-full bg-slate-900 border border-slate-800 rounded-lg p-2 text-slate-200">
+          <input type="url" id="adm-insta" placeholder="Instagram Link" class="w-full bg-slate-900 border border-slate-800 rounded-lg p-2 text-slate-200">
+          <input type="url" id="adm-tw" placeholder="Twitter Link" class="w-full bg-slate-900 border border-slate-800 rounded-lg p-2 text-slate-200">
+        </div>
+
+        <button onclick="saveAdminLinks()" class="w-full py-2 bg-slate-800 hover:bg-slate-700 text-amber-400 font-bold text-xs rounded-lg border border-amber-500/30">Save Settings</button>
+
+        <div class="pt-3 border-t border-slate-800">
+          <button onclick="resetLeaderboardToZero()" class="w-full py-2 bg-red-600/20 hover:bg-red-600/30 text-red-400 border border-red-500/40 font-bold text-xs rounded-lg">Reset Leaderboard to $0</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <footer class="border-t border-slate-900 py-6 text-center text-xs text-slate-600">
+    <p>© 2026 RankUp Official (https://rankup-leaderboard1.vercel.app). All rights reserved.</p>
+  </footer>
+
+  <script>
+    let currentChampion = {
+      name: "No Champion Yet",
+      bid: 0,
+      timestamp: "-- : --"
+    };
+
+    let historyLog = [];
+
+    let socialLinks = {
+      youtube: "https://youtube.com",
+      instagram: "https://instagram.com",
+      twitter: "https://twitter.com"
+    };
+
+    let pendingBidName = "";
+    let pendingBidAmount = 0;
+
+    window.onload = function() {
+      renderLeaderboard();
+      updateSocialHeaderLinks();
+    };
+
+    function renderLeaderboard() {
+      document.getElementById('champion-name').innerText = currentChampion.name;
+      document.getElementById('champion-bid').innerText = '$' + currentChampion.bid.toLocaleString();
+      document.getElementById('champion-time').innerText = currentChampion.timestamp;
+
+      const tbody = document.getElementById('history-table-body');
+      if (historyLog.length === 0) {
+        tbody.innerHTML = `<tr><td colspan="4" class="py-6 text-center text-slate-500 italic">No historical bids recorded yet.</td></tr>`;
+        return;
+      }
+
+      tbody.innerHTML = historyLog.map((item, idx) => `
+        <tr class="hover:bg-slate-900/50 transition">
+          <td class="py-3 px-4 font-bold text-amber-400">#${historyLog.length - idx}</td>
+          <td class="py-3 px-4 font-semibold text-slate-200">${escapeHtml(item.name)}</td>
+          <td class="py-3 px-4 text-amber-300 font-mono">$${item.bid.toLocaleString()}</td>
+          <td class="py-3 px-4 text-xs text-slate-500">${item.timestamp}</td>
+        </tr>
+      `).join('');
+    }
+
+    function initiateRazorpayPayment(e) {
+      e.preventDefault();
+      pendingBidName = document.getElementById('bid-name').value.trim();
+      pendingBidAmount = parseFloat(document.getElementById('bid-amount').value);
+
+      if (!pendingBidName) {
+        alert('Please enter a valid brand or creator name.');
+        return;
+      }
+
+      if (pendingBidAmount <= currentChampion.bid) {
+        alert(`Bid amount must be higher than the current champion bid of $${currentChampion.bid}`);
+        return;
+      }
+
+      // Razorpay Test Gateway Configuration (Key: Rzp_test_Tjs9sIYHTeeVCV)
+      const options = {
+        "key": "Rzp_test_Tjs9sIYHTeeVCV",
+        "amount": Math.round(pendingBidAmount * 100 * 83), // Convert USD approximation to paise for testing or direct amount
+        "currency": "INR",
+        "name": "RankUp Global Sovereign",
+        "description": `Claim #1 Throne for ${pendingBidName}`,
+        "image": "https://placehold.co/128x128/E6B800/000000?text=👑",
+        "handler": function (response) {
+          // Payment Success Callback
+          finalizeSuccessfulBid(pendingBidName, pendingBidAmount, response.razorpay_payment_id);
+        },
+        "prefill": {
+          "name": pendingBidName,
+          "email": "champion@rankup.vercel.app",
+          "contact": "9999999999"
+        },
+        "theme": {
+          "color": "#E6B800"
+        }
+      };
+
+      const rzp = new Razorpay(options);
+      rzp.on('payment.failed', function (response){
+        alert("Payment failed: " + response.error.description);
+      });
+      rzp.open();
+    }
+
+    function finalizeSuccessfulBid(name, amount, paymentId) {
+      const now = new Date();
+      const timeStr = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) + ', ' + now.toLocaleDateString();
+
+      currentChampion = {
+        name: name,
+        bid: amount,
+        timestamp: timeStr
+      };
+
+      historyLog.unshift({...currentChampion});
+      renderLeaderboard();
+      document.getElementById('bid-form').reset();
+
+      // Trigger Poster Canvas & Modal
+      generateInstagramPosterCanvas(currentChampion.name, currentChampion.bid);
+      setupCaptionAndTweetText(currentChampion.name, currentChampion.bid);
+      document.getElementById('poster-modal').classList.remove('hidden');
+
+      // Auto Twitter Simulated Broadcast
+      console.log(`Automated Twitter Broadcast sent for payment ID: ${paymentId}`);
+    }
+
+    function generateInstagramPosterCanvas(name, bid) {
+      const canvas = document.getElementById('poster-canvas');
+      const ctx = canvas.getContext('2d');
+
+      const grad = ctx.createLinearGradient(0, 0, 1080, 1080);
+      grad.addColorStop(0, '#05070a');
+      grad.addColorStop(0.5, '#121824');
+      grad.addColorStop(1, '#000000');
+      ctx.fillStyle = grad;
+      ctx.fillRect(0, 0, 1080, 1080);
+
+      ctx.strokeStyle = '#E6B800';
+      ctx.lineWidth = 20;
+      ctx.strokeRect(40, 40, 1000, 1000);
+
+      ctx.strokeStyle = 'rgba(234, 179, 8, 0.3)';
+      ctx.lineWidth = 4;
+      ctx.strokeRect(60, 60, 960, 960);
+
+      ctx.textAlign = 'center';
+      ctx.font = '80px serif';
+      ctx.fillText('👑', 540, 180);
+
+      ctx.fillStyle = '#E6B800';
+      ctx.font = 'bold 36px sans-serif';
+      ctx.fillText('RANKUP OFFICIAL PLATFORM', 540, 250);
+
+      ctx.fillStyle = '#94a3b8';
+      ctx.font = 'bold 24px sans-serif';
+      ctx.fillText('GLOBAL LEADERBOARD TAKEOVER', 540, 295);
+
+      ctx.strokeStyle = '#E6B800';
+      ctx.lineWidth = 2;
+      ctx.beginPath();
+      ctx.moveTo(340, 340);
+      ctx.lineTo(740, 340);
+      ctx.stroke();
+
+      ctx.fillStyle = '#FFFFFF';
+      ctx.font = 'bold 32px sans-serif';
+      ctx.fillText('NEW #1 CHAMPION', 540, 430);
+
+      ctx.fillStyle = '#FFF5C0';
+      ctx.font = 'bold 68px sans-serif';
+      ctx.fillText(name.toUpperCase(), 540, 530);
+
+      ctx.fillStyle = 'rgba(234, 179, 8, 0.15)';
+      ctx.fillRect(240, 610, 600, 180);
+      ctx.strokeStyle = '#E6B800';
+      ctx.lineWidth = 3;
+      ctx.strokeRect(240, 610, 600, 180);
+
+      ctx.fillStyle = '#94a3b8';
+      ctx.font = '26px sans-serif';
+      ctx.fillText('RECORD CLAIM BID', 540, 660);
+
+      ctx.fillStyle = '#4ade80';
+      ctx.font = 'bold 72px sans-serif';
+      ctx.fillText('$' + bid.toLocaleString(), 540, 750);
+
+      ctx.fillStyle = '#64748b';
+      ctx.font = '22px sans-serif';
+      ctx.fillText('Watch Live Takeovers on YouTube & Twitter', 540, 880);
+
+      ctx.fillStyle = '#E6B800';
+      ctx.font = 'bold 26px sans-serif';
+      ctx.fillText('https://rankup-leaderboard1.vercel.app', 540, 930);
+    }
+
+    function downloadPosterImage() {
+      const canvas = document.getElementById('poster-canvas');
+      const link = document.createElement('a');
+      link.download = `${currentChampion.name.replace(/\s+/g, '_')}_Rank1_Poster.png`;
+      link.href = canvas.toDataURL('image/png');
+      link.click();
+    }
+
+    function setupCaptionAndTweetText(name, bid) {
+      const caption = `👑 NEW #1 RANK TAKEOVER! 👑\n\n${name} has officially claimed the Sovereign Crown on RankUp Official with a winning bid of $${bid.toLocaleString()}!\n\n🔥 Think you can dethrone them? Place your bid now:\n🌐 https://rankup-leaderboard1.vercel.app\n\n#RankUp #Leaderboard #Champion #Takeover #King #GlobalRank`;
+      document.getElementById('insta-caption').value = caption;
+    }
+
+    function copyInstagramCaption() {
+      const copyText = document.getElementById('insta-caption');
+      copyText.select();
+      document.execCommand('copy');
+      alert('Instagram caption copied to clipboard!');
+    }
+
+    function triggerTweetBroadcast() {
+      const tweetText = encodeURIComponent(`👑 NEW #1 CHAMPION TAKEOVER!\n\n${currentChampion.name} just claimed Rank #1 with a bid of $${currentChampion.bid.toLocaleString()} on @RankUpOfficial!\n\nDethrone them now: https://rankup-leaderboard1.vercel.app`);
+      window.open(`https://twitter.com/intent/tweet?text=${tweetText}`, '_blank');
+    }
+
+    function closePosterModal() {
+      document.getElementById('poster-modal').classList.add('hidden');
+    }
+
+    function openAdminModal() {
+      document.getElementById('admin-modal').classList.remove('hidden');
+    }
+
+    function closeAdminModal() {
+      document.getElementById('admin-modal').classList.add('hidden');
+    }
+
+    function authenticateAdmin() {
+      const pass = document.getElementById('admin-passkey').value;
+      if (pass === 'RankUpAdmin2026') {
+        document.getElementById('admin-auth').classList.add('hidden');
+        document.getElementById('admin-controls').classList.remove('hidden');
+
+        document.getElementById('adm-yt').value = socialLinks.youtube;
+        document.getElementById('adm-insta').value = socialLinks.instagram;
+        document.getElementById('adm-tw').value = socialLinks.twitter;
+      } else {
+        alert('Invalid Admin Passkey!');
+      }
+    }
+
+    function saveAdminLinks() {
+      socialLinks.youtube = document.getElementById('adm-yt').value || socialLinks.youtube;
+      socialLinks.instagram = document.getElementById('adm-insta').value || socialLinks.instagram;
+      socialLinks.twitter = document.getElementById('adm-tw').value || socialLinks.twitter;
+
+      updateSocialHeaderLinks();
+      alert('Social links updated successfully!');
+      closeAdminModal();
+    }
+
+    function updateSocialHeaderLinks() {
+      document.getElementById('hdr-youtube').href = socialLinks.youtube;
+      document.getElementById('hdr-instagram').href = socialLinks.instagram;
+      document.getElementById('hdr-twitter').href = socialLinks.twitter;
+      document.getElementById('yt-channel-link').href = socialLinks.youtube;
+    }
+
+    function resetLeaderboardToZero() {
+      if (confirm('Are you sure you want to reset the leaderboard and history to $0?')) {
+        currentChampion = { name: "No Champion Yet", bid: 0, timestamp: "-- : --" };
+        historyLog = [];
+        renderLeaderboard();
+        alert('Leaderboard reset to initial state!');
+        closeAdminModal();
+      }
+    }
+
+    function escapeHtml(str) {
+      return str.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(#'/g, "&#039;");
+    }
+  </script>
+</body>
+</html>
+```
+eof
